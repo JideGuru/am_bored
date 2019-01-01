@@ -3,24 +3,18 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-
-class Jokes extends StatefulWidget {
-
+class Quotes extends StatefulWidget {
   final String header;
 
-  Jokes({Key key, this.header}) : super(key: key);
+  Quotes({Key key, this.header}) : super(key: key);
+
   @override
-  _JokesState createState() => _JokesState();
+  _QuotesState createState() => _QuotesState();
 }
 
-class _JokesState extends State<Jokes> {
-
+class _QuotesState extends State<Quotes> {
   Map allData;
-  List data;
-  String joke;
-  String id;
   var isLoading = false;
-
 
   Future getJoke() async {
     setState(() {
@@ -28,21 +22,16 @@ class _JokesState extends State<Jokes> {
     });
 
     //API for getting the data
-    String apiLink = "https://icanhazdadjoke.com/";
+    String apiLink = "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
     print(apiLink);
 
-    http.Response response = await http.get(apiLink,
-        headers: {"Accept": "application/json"});
+    http.Response response = await http.get(apiLink);
 
     if (response.statusCode == 200) {
       allData = jsonDecode(response.body); //JSON.decode in older versions of flutter
 
       print(allData.toString());
 
-      joke = allData['joke'];
-      id = allData['id'];
-      print(joke);
-      print(id);
 //      data = allData['results'];
 
 //      print(data.toString());
@@ -56,22 +45,21 @@ class _JokesState extends State<Jokes> {
 
   }
 
+
   @override
   void initState() {
     super.initState();
     getJoke();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Jokes",
+        title: Text("Quotes",
           style: TextStyle(
-              color: Colors.blue
+            color: Colors.green
           ),
         ),
       ),
@@ -81,8 +69,7 @@ class _JokesState extends State<Jokes> {
         child: CircularProgressIndicator(
 
         ),
-      )
-          :Container(
+      ) : Container(
         margin: EdgeInsets.only(left: 20.0, right: 20.0),
         child: Center(
           child: Column(
@@ -90,14 +77,20 @@ class _JokesState extends State<Jokes> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
 
-              Container(
-                child: Image.network("https://icanhazdadjoke.com/j/$id.png"),
-              ),
-              
               Card(
                 child: Container(
                   margin: EdgeInsets.all(10.0),
-                  child: Text("$joke", style: TextStyle(fontSize: 17.0,),),
+                  child: ListTile(
+                    title: Text(
+                      "${allData["quoteText"]}",
+                      style: TextStyle(
+                        fontSize: 17.0,
+                      ),
+                    ),
+
+                    subtitle: Text("Author: ${allData["quoteAuthor"]}",)
+
+                  ),
                 ),
                 elevation: 4.0,
               ),
@@ -115,10 +108,13 @@ class _JokesState extends State<Jokes> {
                   },
                 ),
               ),
+
+
             ],
           ),
         ),
-      ),
+
+      )
     );
   }
 }

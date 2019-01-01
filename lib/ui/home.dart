@@ -1,4 +1,5 @@
 import 'package:Bored/ui/jokes.dart';
+import 'package:Bored/ui/quotes.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -75,6 +76,31 @@ class _HomeState extends State<Home> {
                 },
               ),
               
+              Divider(),
+
+              ListTile(
+                title: Text("Inspirational Quotes"),
+                subtitle: Text("Get inspires with cool quotes from top QUOTERS😂"),
+//                leading: CircleAvatar(
+//                  backgroundColor: Colors.green,
+//                  child: Text("😀"),
+//                ),
+//
+                trailing: CircleAvatar(
+                  backgroundColor: Colors.green,
+                  child: Text("😀")
+                ),
+                onTap: (){
+                  var router = new MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return Quotes(header: widget.header,);
+                      }
+                  );
+
+                  Navigator.of(context).push(router);
+                },
+              ),
+
               Divider(),
             ],
           ),
