@@ -8,6 +8,7 @@ import 'dart:convert';
 class MySearchDelegate extends SearchDelegate {
   Map allData;
   List data;
+  var isLoading = false;
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -42,7 +43,8 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    if (query.length < 3) {
+
+    if (query.length < 2) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -55,7 +57,6 @@ class MySearchDelegate extends SearchDelegate {
       );
     }
 
-    getJokes();
 
     return Container(
       child: ListView.separated(
@@ -65,6 +66,7 @@ class MySearchDelegate extends SearchDelegate {
           String icon_url = data[position]['icon_url'];
           String value = data[position]['value'];
           String id = data[position]['id'];
+          print(id);
           return ListTile(
             title: Text("$id"),
 
@@ -80,7 +82,7 @@ class MySearchDelegate extends SearchDelegate {
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          Divider();
+          return Divider();
         },
       ),
     );
@@ -88,13 +90,11 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    getJokes();
     return Column();
   }
 
   Future getJokes() async {
-//      setState(() {
-//        isLoading = true;
-//      });
 
     //API for getting the data
     String link = "https://api.chucknorris.io/jokes/search?query=$query";
@@ -106,18 +106,17 @@ class MySearchDelegate extends SearchDelegate {
     if (response.statusCode == 200) {
       allData = jsonDecode(response.body); //JSON.decode in older versions of flutter
 
-      print(allData.toString());
+//      print(allData.toString());
 
       data = allData['result'];
 
       print(data.toString());
 
-//        setState(() {
-//          isLoading = false;
-//        });
+
     }else {
       throw Exception('Failed to load');
     }
 
   }
+
 }
