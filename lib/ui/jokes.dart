@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:Bored/ui/search.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -56,6 +57,8 @@ class _JokesState extends State<Jokes> {
 
   }
 
+
+
   @override
   void initState() {
     super.initState();
@@ -67,13 +70,27 @@ class _JokesState extends State<Jokes> {
     return Scaffold(
 
       appBar: AppBar(
-        centerTitle: true,
+//        centerTitle: true,
         title: Text(
           "Jokes",
           style: TextStyle(
               color: Colors.blue
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon:Icon(
+                Icons.search,
+                color: Colors.blue,
+              ),
+              onPressed: (){
+                showSearch(
+                  context: context,
+                  delegate: MySearchDelegate(),
+                );
+              }
+          )
+        ],
       ),
 
       body: isLoading
