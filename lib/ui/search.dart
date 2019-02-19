@@ -50,7 +50,7 @@ class MySearchDelegate extends SearchDelegate {
         children: <Widget>[
           Center(
             child: Text(
-              "Search term must be longer than two letters.",
+              "Search term must be longer than 1 letters.",
             ),
           )
         ],
