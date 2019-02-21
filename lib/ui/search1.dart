@@ -4,12 +4,11 @@ import 'dart:async';
 import 'dart:convert';
 
 
+
 class MySearchDelegate extends SearchDelegate {
   Map allData;
   List data;
   var isLoading = false;
-  String API_KEY = '427cae42073e49a5829be896c0e82ce3';
-
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -51,7 +50,7 @@ class MySearchDelegate extends SearchDelegate {
         children: <Widget>[
           Center(
             child: Text(
-              "Search term must be longer than 1 letter",
+              "Search term must be longer than 1 letters.",
             ),
           )
         ],
@@ -64,19 +63,17 @@ class MySearchDelegate extends SearchDelegate {
         itemCount: data == null ? 0 : data.length,
         padding: EdgeInsets.all(16.0),
         itemBuilder: (BuildContext context, int position) {
-          String icon_url = data[position]['urlToImage'];
-          String url = data[position]['url'];
-          String description = data[position]['description'];
-          String title = data[position]['title'];
-          print(title);
+          String icon_url = data[position]['icon_url'];
+          String value = data[position]['value'];
+          String id = data[position]['id'];
+          print(id);
           return ListTile(
-            title: Text("$title"),
+            title: Text("$id"),
 
-            subtitle: Text("$description"),
+            subtitle: Text("$value"),
 
             leading: CircleAvatar(
-//              child: Image.network("$icon_url"),
-              backgroundImage: NetworkImage("$icon_url"),
+              child: Image.network("$icon_url"),
             ),
 
 //            onTap: (){
@@ -100,7 +97,7 @@ class MySearchDelegate extends SearchDelegate {
   Future getJokes() async {
 
     //API for getting the data
-    String link = 'https://newsapi.org/v2/top-headlines?q=${query}&apiKey=${API_KEY}';
+    String link = "https://api.chucknorris.io/jokes/search?query=$query";
     print(link);
 
     http.Response response = await http.get(link,
@@ -109,9 +106,9 @@ class MySearchDelegate extends SearchDelegate {
     if (response.statusCode == 200) {
       allData = jsonDecode(response.body); //JSON.decode in older versions of flutter
 
-      print(allData.toString());
+//      print(allData.toString());
 
-      data = allData['articles'];
+      data = allData['result'];
 
       print(data.toString());
 
