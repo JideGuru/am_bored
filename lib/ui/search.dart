@@ -5,8 +5,8 @@ import 'dart:convert';
 
 
 class MySearchDelegate extends SearchDelegate {
-  Map allData;
-  List data;
+  late Map allData;
+  late List data;
   var isLoading = false;
   String API_KEY = '427cae42073e49a5829be896c0e82ce3';
 
@@ -103,7 +103,7 @@ class MySearchDelegate extends SearchDelegate {
     String link = 'https://newsapi.org/v2/top-headlines?q=${query}&apiKey=${API_KEY}';
     print(link);
 
-    http.Response response = await http.get(link,
+    http.Response response = await http.get(Uri.parse(link),
         headers: {"Accept": "application/json"});
 
     if (response.statusCode == 200) {

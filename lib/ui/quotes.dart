@@ -6,14 +6,14 @@ import 'dart:convert';
 class Quotes extends StatefulWidget {
   final String header;
 
-  Quotes({Key key, this.header}) : super(key: key);
+  Quotes({Key? key, required this.header}) : super(key: key);
 
   @override
   _QuotesState createState() => _QuotesState();
 }
 
 class _QuotesState extends State<Quotes> {
-  Map allData;
+  late Map allData;
   var isLoading = false;
 
   Future getJoke() async {
@@ -25,7 +25,7 @@ class _QuotesState extends State<Quotes> {
     String apiLink = "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
     print(apiLink);
 
-    http.Response response = await http.get(apiLink);
+    http.Response response = await http.get(Uri.parse(apiLink));
 
     if (response.statusCode == 200) {
       allData = jsonDecode(response.body); //JSON.decode in older versions of flutter
@@ -97,12 +97,12 @@ class _QuotesState extends State<Quotes> {
 
 
               Container(
-                child: RaisedButton(
+                child: ElevatedButton(
                   child: Text(
                     "Randomize",
                     style: TextStyle(color: Colors.white,),
                   ),
-                  color: Colors.blue,
+                  // color: Colors.blue,
                   onPressed: (){
                     getJoke();
                   },

@@ -9,17 +9,17 @@ class Jokes extends StatefulWidget {
 
   final String header;
 
-  Jokes({Key key, this.header}) : super(key: key);
+  Jokes({Key? key, required this.header}) : super(key: key);
   @override
   _JokesState createState() => _JokesState();
 }
 
 class _JokesState extends State<Jokes> {
 
-  Map allData;
-  List data;
-  String joke;
-  String id;
+  late Map allData;
+  late List data;
+  late String joke;
+  late String id;
   var isLoading = false;
 
 
@@ -32,7 +32,7 @@ class _JokesState extends State<Jokes> {
     String apiLink = "https://icanhazdadjoke.com/";
     print(apiLink);
 
-    http.Response response = await http.get(apiLink,
+    http.Response response = await http.get(Uri.parse(apiLink),
         headers: {"Accept": "application/json"});
 
     if (response.statusCode == 200) {
@@ -121,12 +121,12 @@ class _JokesState extends State<Jokes> {
 
 
               Container(
-                child: RaisedButton(
+                child: ElevatedButton(
                   child: Text(
                     "Randomize",
                     style: TextStyle(color: Colors.white,),
                   ),
-                  color: Colors.blue,
+                  // color: Colors.blue,
                   onPressed: (){
                     getJoke();
                   },

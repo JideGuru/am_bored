@@ -6,8 +6,8 @@ import 'dart:convert';
 
 
 class MySearchDelegate extends SearchDelegate {
-  Map allData;
-  List data;
+  late Map allData;
+  late List data;
   var isLoading = false;
 
   @override
@@ -100,7 +100,7 @@ class MySearchDelegate extends SearchDelegate {
     String link = "https://api.chucknorris.io/jokes/search?query=$query";
     print(link);
 
-    http.Response response = await http.get(link,
+    http.Response response = await http.get(Uri.parse(link),
         headers: {"Accept": "application/json"});
 
     if (response.statusCode == 200) {

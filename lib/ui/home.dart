@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Home extends StatefulWidget {
   final String header;
 
-  Home({Key key, this.header}) : super(key: key);
+  Home({Key? key, required this.header}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();

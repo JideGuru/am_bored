@@ -8,7 +8,7 @@ import 'dart:async';
 class Splash extends StatefulWidget {
   final String header;
 
-  Splash({Key key, this.header}) : super(key: key);
+  Splash({Key? key, required this.header}) : super(key: key);
   @override
   _SplashState createState() => _SplashState();
 }
@@ -28,7 +28,7 @@ class _SplashState extends State<Splash> {
   var timeout = const Duration(seconds: 3);
   var ms = const Duration(milliseconds: 1);
 
-  startTimeout([int milliseconds]) {
+  startTimeout([int? milliseconds]) {
     var duration = milliseconds == null ? timeout : ms * milliseconds;
     return new Timer(duration, handleTimeout);
   }
